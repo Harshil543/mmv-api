@@ -1,11 +1,13 @@
 const { getAlltaskService } = require("../services/TodoServices");
 
+const { response } = require("../utils/helper");
+console.log(response);
 const getAllTasksController = async (req, res) => {
   try {
     const TaskList = await getAlltaskService();
-    res.json(TaskList);
+    res.json({ ...response, data: TaskList });
   } catch (error) {
-    console.error("Error:", error);
+    console.log(error);
     res.status(500).send("Internal Server Error");
   }
 };
