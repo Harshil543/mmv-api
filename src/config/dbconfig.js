@@ -1,16 +1,15 @@
 const config = {
-  // user: process.env.USER,
-  // password: process.env.PASSWORD,
-  // server: process.env.SERVER,
-  // database: process.env.DATABASE,
-
-  user: "SharvayaFranchise",
-  password: "sharvaya@2024$",
-  server: "43.231.126.253",
-  database: "SharvayaFranchise",
+  user: process.env.USER,
+  password: process.env.PASSWORD,
+  server: process.env.SERVER,
+  database: process.env.DATABASE,
+  // user: "SharvayaFranchise",
+  // password: "sharvaya@2024$",
+  // server: "43.231.126.253",
+  // database: "SharvayaFranchise",
   options: {
-    encrypt: false,
-    trustServerCertificate: false
+    // encrypt: false,
+    // trustServerCertificate: false
   }
 };
 // USER = "SharvayaFranchise";
