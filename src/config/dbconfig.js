@@ -8,8 +8,7 @@ const config = {
   server: "43.231.126.253",
   database: "SharvayaFranchise",
   options: {
-    encrypt: true,
-    trustServerCertificate: true
+    encrypt: sqlEncrypt
   }
 };
 // USER = "SharvayaFranchise";
