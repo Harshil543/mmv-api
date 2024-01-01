@@ -10,7 +10,8 @@ const config = {
   database: "SharvayaFranchise",
   options: {
     encrypt: true,
-    trustServerCertificate: true
+    trustServerCertificate: true,
+    trustedConnection: true
   },
   ssl: {
     rejectUnauthorized: false
