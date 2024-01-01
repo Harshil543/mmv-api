@@ -1,7 +1,7 @@
 const express = require("express");
 // const Routes = require("./src/routes/TodoRoutes");
-// const config = require("./src/config/dbconfig");
-// console.log(config);
+const config = require("./src/config/dbconfig");
+console.log(config);
 const app = express();
 const port = 3000;
 
