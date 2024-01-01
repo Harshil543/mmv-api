@@ -12,9 +12,6 @@ const config = {
     encrypt: true,
     trustServerCertificate: true,
     trustedConnection: true
-  },
-  ssl: {
-    rejectUnauthorized: false
   }
 };
 
