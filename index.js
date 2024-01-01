@@ -8,7 +8,7 @@ const port = 3000;
 // app.use("/", Routes);
 
 app.get("/", (req, res) => {
-  res.send("Hello, World!");
+  res.send({ string: "Hello, World!", data: config });
 });
 
 app.listen(port, () => {
