@@ -11,7 +11,7 @@ const config = {
   server: "43.231.126.253",
   database: "SharvayaFranchise",
   options: {
-    encrypt: false,
+    encrypt: true,
     trustServerCertificate: true
   }
 };
