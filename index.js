@@ -1,14 +1,9 @@
 const express = require("express");
-// const Routes = require("./src/routes/TodoRoutes");
-// const config = require("./src/config/dbconfig");
-// console.log(config);
+const Routes = require("./src/routes/TodoRoutes");
 const app = express();
 const port = 3000;
+
 const config = {
-  // user: process.env.USER,
-  // password: process.env.PASSWORD,
-  // server: process.env.SERVER,
-  // database: process.env.DATABASE,
   user: "SharvayaFranchise",
   password: "sharvaya@2024$",
   server: "43.231.126.253",
@@ -17,7 +12,8 @@ const config = {
     encrypt: true
   }
 };
-// app.use("/", Routes);
+
+app.use("/", Routes);
 
 app.get("/", (req, res) => {
   res.send(config);
