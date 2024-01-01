@@ -15,7 +15,7 @@ const config = {
 
 app.get("/", async () => {
   const pool = await sql.connect(config);
-  console.log(pool);
+  console.log(pool.connected);
   try {
     const result = await pool
       .request()
