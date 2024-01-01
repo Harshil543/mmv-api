@@ -12,7 +12,7 @@ const config = {
   database: "SharvayaFranchise",
   trustServerCertificate: true,
   options: {
-    encrypt: true,
+    encrypt: false,
     cryptoCredentialsDetails: {
       minVersion: "TLSv1"
     }
