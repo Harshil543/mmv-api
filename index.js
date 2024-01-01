@@ -10,6 +10,9 @@ const config = {
   password: "sharvaya@2024$",
   server: "43.231.126.253",
   database: "SharvayaFranchise",
+  authentication: {
+    type: "default"
+  },
   options: {
     encrypt: true,
     trustServerCertificate: true
