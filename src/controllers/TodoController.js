@@ -1,7 +1,6 @@
 const { getAlltaskService } = require("../services/TodoServices");
 
 const { response } = require("../utils/helper");
-console.log(response);
 const getAllTasksController = async (req, res) => {
   try {
     const TaskList = await getAlltaskService();
