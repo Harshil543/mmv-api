@@ -1,14 +1,29 @@
 const express = require("express");
-// const Routes = require("./src/routes/TodoRoutes");
-const config = require("./src/config/dbconfig");
-console.log(config);
+const sql = require("mssql");
 const app = express();
 const port = 3000;
 
-// app.use("/", Routes);
+const config = {
+  user: "SharvayaFranchise",
+  password: "sharvaya@2024$",
+  server: "43.231.126.253",
+  database: "SharvayaFranchise",
+  options: {
+    encrypt: false
+  }
+};
 
-app.get("/", (req, res) => {
-  res.send({ string: "Hello, World!", data: config });
+app.get("/", async () => {
+  const pool = await sql.connect(config);
+  console.log(pool);
+  try {
+    const result = await pool
+      .request()
+      .query("SELECT * FROM SharvayaFranchise.dbo.TODO");
+    return result.recordset;
+  } finally {
+    sql.close();
+  }
 });
 
 app.listen(port, () => {
