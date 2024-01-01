@@ -46,7 +46,7 @@ const config = {
     type: "default"
   },
   options: {
-    encrypt: false
+    encrypt: true
   }
 };
 
