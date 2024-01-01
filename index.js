@@ -14,8 +14,7 @@ const config = {
     type: "default"
   },
   options: {
-    encrypt: true,
-    trustServerCertificate: true
+    encrypt: true
   }
 };
 // app.use("/", Routes);
