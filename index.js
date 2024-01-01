@@ -9,18 +9,18 @@ const config = {
   server: "43.231.126.253",
   database: "SharvayaFranchise",
   options: {
-    encrypt: false
+    encrypt: true,
+    trustServerCertificate: true
   }
 };
 
-app.get("/", async () => {
-  const pool = await sql.connect(config);
-  console.log(pool.connected);
+app.get("/", async (req, res) => {
   try {
+    const pool = await sql.connect(config);
     const result = await pool
       .request()
       .query("SELECT * FROM SharvayaFranchise.dbo.TODO");
-    return result.recordset;
+    res.json({ data: result.recordset });
   } finally {
     sql.close();
   }
