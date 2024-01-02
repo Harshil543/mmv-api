@@ -1,4 +1,3 @@
-const sql = require("mssql");
 const sequelize = require("../config/dbconfig");
 const { Sequelize } = require("sequelize");
 
@@ -12,9 +11,102 @@ const getAllTask = async () => {
     );
     return tasks;
   } catch (err) {
-    console.log(err);
     return err
   }
 };
 
-module.exports = { getAllTask };
+const createTask = async (req, res) => {
+  try {
+    const {
+      TaskDescription,
+      TaskCategoryId,
+      Location,
+      Priority,
+      StartDate,
+      DueDate,
+      DeliveryDate,
+      CompletionDate,
+      EmployeeID,
+      Reminder,
+      ReminderMonth,
+      CreatedBy,
+      UpdatedBy,
+      Longitude,
+      Latitude,
+      ClosingRemarks,
+      CustomerID,
+      ActualDeliveryDate,
+      CreatedDate, UpdatedDate,
+    } = req.body;
+
+    const [insertedRow, _] = await sequelize.query(
+      `INSERT INTO SharvayaFranchise.dbo.TODO
+            (TaskDescription, TaskCategoryId, Location, Priority, StartDate, DueDate, DeliveryDate, CompletionDate, EmployeeID, Reminder, ReminderMonth, CreatedBy, CreatedDate, UpdatedBy, UpdatedDate, Longitude, Latitude, ClosingRemarks, CustomerID, ActualDeliveryDate)
+            OUTPUT Inserted.pkID
+            VALUES('${TaskDescription}', ${TaskCategoryId}, '${Location}', '${Priority}','${StartDate}', '${DueDate}', '${DeliveryDate}', '${CompletionDate}', ${EmployeeID}, ${Reminder}, ${ReminderMonth}, '${CreatedBy}','${CreatedDate}', '${UpdatedBy}', '${UpdatedDate}', '${Longitude}', '${Latitude}', '${ClosingRemarks}', ${CustomerID}, '${ActualDeliveryDate}');`,
+      {
+        type: Sequelize.QueryTypes.INSERT
+      }
+    );
+    const insertedPkID = insertedRow[0].pkID;
+    return insertedPkID
+  } catch (err) {
+    return err
+  }
+}
+
+const deleteTask = async (req, res) => {
+  try {
+    const { ID } = req.body
+    await sequelize.query(
+      `DELETE FROM SharvayaFranchise.dbo.TODO
+      WHERE pkID=${ID}`,
+      {
+        type: Sequelize.QueryTypes.DELETE
+      }
+    );
+    return { status: "SUCCESS", message: "Task Deleted Successfully." };
+  } catch (err) {
+    return err
+  }
+};
+
+const editTask = async (req, res) => {
+  try {
+    const {
+      ID,
+      TaskDescription,
+      TaskCategoryId,
+      Location,
+      Priority,
+      StartDate,
+      DueDate,
+      DeliveryDate,
+      CompletionDate,
+      EmployeeID,
+      Reminder,
+      ReminderMonth,
+      CreatedBy,
+      UpdatedBy,
+      Longitude,
+      Latitude,
+      ClosingRemarks,
+      UpdatedDate,
+      CustomerID,
+      ActualDeliveryDate } = req.body
+
+    await sequelize.query(
+      `UPDATE SharvayaFranchise.dbo.TODO
+      SET TaskDescription='${TaskDescription}', TaskCategoryId=${TaskCategoryId}, Location='${Location}', Priority='${Priority}', StartDate='${StartDate}', DueDate='${DueDate}', DeliveryDate='${DeliveryDate}', CompletionDate='${CompletionDate}', EmployeeID=${EmployeeID}, Reminder=${Reminder}, ReminderMonth=${Reminder}, CreatedBy='${CreatedBy}', UpdatedBy='${UpdatedBy}', UpdatedDate='${UpdatedDate}', Longitude='${Longitude}', Latitude='${Latitude}', ClosingRemarks='${ClosingRemarks}', CustomerID=${CustomerID}, ActualDeliveryDate='${ActualDeliveryDate}'
+      WHERE pkID=${ID}`,
+      {
+        type: Sequelize.QueryTypes.UPDATE
+      }
+    );
+    return { status: "SUCCESS", message: "Task updated Successfully." };
+  } catch (err) {
+    return err
+  }
+};
+
+module.exports = { getAllTask, createTask, deleteTask, editTask };
