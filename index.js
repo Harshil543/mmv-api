@@ -1,29 +1,29 @@
 const express = require("express");
-const sql = require("mssql");
 const app = express();
+const { Sequelize } = require("sequelize");
 const port = 3000;
-
-const config = {
-  user: "SharvayaFranchise",
-  password: "sharvaya@2024$",
-  server: "43.231.126.253",
-  database: "SharvayaFranchise",
-  options: {
-    encrypt: true,
-    trustServerCertificate: true,
-    trustedConnection: true
+const sequelize = new Sequelize(
+  "SharvayaFranchise",
+  "SharvayaFranchise",
+  "sharvaya@2024$",
+  {
+    host: "43.231.126.253",
+    dialect: "mssql"
   }
-};
+);
 
 app.get("/", async (req, res) => {
   try {
-    const pool = await sql.connect(config);
-    const result = await pool
-      .request()
-      .query("SELECT * FROM SharvayaFranchise.dbo.TODO");
-    res.json({ data: result.recordset });
-  } finally {
-    sql.close();
+    const tasks = await sequelize.query(
+      "SELECT * FROM SharvayaFranchise.dbo.TODO",
+      {
+        type: Sequelize.QueryTypes.SELECT
+      }
+    );
+    res.json({ data: tasks });
+  } catch (error) {
+    console.error("Error fetching TODOs:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
