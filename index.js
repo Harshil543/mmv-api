@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const { Sequelize } = require("sequelize");
-const port = 3000;
+const port = 8000;
 const tedious = require("tedious");
 const { DefaultAzureCredential } = require("@azure/identity");
 
