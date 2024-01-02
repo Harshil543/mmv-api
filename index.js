@@ -2,13 +2,16 @@ const express = require("express");
 const app = express();
 const { Sequelize } = require("sequelize");
 const port = 3000;
+const tedious = require("tedious");
+
 const sequelize = new Sequelize(
   "SharvayaFranchise",
   "SharvayaFranchise",
   "sharvaya@2024$",
   {
     host: "43.231.126.253",
-    dialect: "mssql"
+    dialect: "mssql",
+    dialectModule: tedious
   }
 );
 
