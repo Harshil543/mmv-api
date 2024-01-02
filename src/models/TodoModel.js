@@ -1,15 +1,19 @@
 const sql = require("mssql");
-const config = require("../config/dbconfig");
+const sequelize = require("../config/dbconfig");
+const { Sequelize } = require("sequelize");
 
 const getAllTask = async () => {
-  const pool = await sql.connect(config);
   try {
-    const result = await pool
-      .request()
-      .query("SELECT * FROM SharvayaFranchise.dbo.TODO");
-    return result.recordset;
-  } finally {
-    sql.close();
+    const tasks = await sequelize.query(
+      "SELECT * FROM SharvayaFranchise.dbo.TODO",
+      {
+        type: Sequelize.QueryTypes.SELECT
+      }
+    );
+    return tasks;
+  } catch (err) {
+    console.log(err);
+    return err
   }
 };
 

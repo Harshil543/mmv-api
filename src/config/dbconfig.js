@@ -1,18 +1,31 @@
-const config = {
-  // user: process.env.USER,
-  // password: process.env.PASSWORD,
-  // server: process.env.SERVER,
-  // database: process.env.DATABASE,
-  user: "SharvayaFranchise",
-  password: "sharvaya@2024$",
-  server: "43.231.126.253",
-  database: "SharvayaFranchise",
-  options: {
-    encrypt: true
+const { Sequelize } = require("sequelize");
+const tedious = require("tedious");
+const { DefaultAzureCredential } = require("@azure/identity");
+
+const sequelize = new Sequelize(
+  "SharvayaFranchise",
+  "SharvayaFranchise",
+  "sharvaya@2024$",
+  {
+    host: "43.231.126.253",
+    dialect: "mssql",
+    dialectModule: tedious,
+    authentication: {
+      type: "azure-active-directory-access-token",
+      options: {
+        tokenFactory: async () => {
+          const credential = new DefaultAzureCredential();
+          const token = await credential.getToken(
+            "https://database.windows.net/"
+          );
+
+          return token?.token || null;
+        }
+      }
+    }
   }
-};
-// USER = "SharvayaFranchise";
-// PASSWORD = "sharvaya@2024$";
-// SERVER = "43.231.126.253";
-// DATABASE = "SharvayaFranchise";
-module.exports = config;
+);
+
+console.log(sequelize);
+
+module.exports = sequelize;
