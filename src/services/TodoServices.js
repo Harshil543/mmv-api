@@ -1,7 +1,11 @@
-const { getAllTask, createTask, deleteTask, editTask } = require("../models/TodoModel");
+const { getAllOption, getAllTask, createTask, deleteTask, editTask } = require("../models/TodoModel");
 
 const getAlltaskService = async () => {
   const data = await getAllTask();
+  return data;
+};
+const getAllOptionService = async () => {
+  const data = await getAllOption();
   return data;
 };
 
@@ -21,4 +25,4 @@ const editTaskService = async (req, res) => {
 };
 
 
-module.exports = { getAlltaskService, createTaskService, deleteTaskService, editTaskService };
+module.exports = { getAlltaskService, createTaskService, deleteTaskService, editTaskService, getAllOptionService };

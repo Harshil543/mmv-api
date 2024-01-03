@@ -1,4 +1,4 @@
-const { getAlltaskService, createTaskService, deleteTaskService, editTaskService } = require("../services/TodoServices");
+const { getAllOptionService, getAlltaskService, createTaskService, deleteTaskService, editTaskService } = require("../services/TodoServices");
 const { response } = require("../utils/helper");
 
 const getAllTasksController = async (req, res) => {
@@ -10,6 +10,14 @@ const getAllTasksController = async (req, res) => {
   }
 };
 
+const getAllOptionController = async (req, res) => {
+  try {
+    const TaskList = await getAllOptionService();
+    res.json({ ...response, data: TaskList });
+  } catch (error) {
+    res.status(500).send("Internal Server Error");
+  }
+};
 const CreateTasksController = async (req, res) => {
   try {
     const ID = await createTaskService(req, res);
@@ -37,4 +45,4 @@ const editTaskController = async (req, res) => {
   }
 };
 
-module.exports = { getAllTasksController, CreateTasksController, deleteTaskController, editTaskController };
+module.exports = { getAllOptionController, getAllTasksController, CreateTasksController, deleteTaskController, editTaskController };

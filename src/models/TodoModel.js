@@ -15,6 +15,20 @@ const getAllTask = async () => {
   }
 };
 
+const getAllOption = async () => {
+  try {
+    const tasks = await sequelize.query(
+      "SELECT ScreenFullName, EmployeeID FROM SharvayaFranchise.dbo.MST_Users",
+      {
+        type: Sequelize.QueryTypes.SELECT
+      }
+    );
+    return tasks;
+  } catch (err) {
+    return err
+  }
+};
+
 const createTask = async (req, res) => {
   try {
     const {
@@ -109,4 +123,4 @@ const editTask = async (req, res) => {
   }
 };
 
-module.exports = { getAllTask, createTask, deleteTask, editTask };
+module.exports = { getAllTask, createTask, deleteTask, editTask, getAllOption };
