@@ -4,7 +4,7 @@ const { DefaultAzureCredential } = require("@azure/identity");
 require('dotenv').config();
 const sequelize = new Sequelize(
   process.env.DATABASE,
-  process.env.USER,
+  process.env.USER_NAME,
   process.env.PASSWORD,
   {
     host: process.env.SERVER,
@@ -18,7 +18,6 @@ const sequelize = new Sequelize(
           const token = await credential.getToken(
             "https://database.windows.net/"
           );
-
           return token?.token || null;
         }
       }
