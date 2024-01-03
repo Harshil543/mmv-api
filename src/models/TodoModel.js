@@ -17,13 +17,19 @@ const getAllTask = async () => {
 
 const getAllOption = async () => {
   try {
-    const tasks = await sequelize.query(
+    const Employee = await sequelize.query(
       "SELECT ScreenFullName, EmployeeID FROM SharvayaFranchise.dbo.MST_Users",
       {
         type: Sequelize.QueryTypes.SELECT
       }
     );
-    return tasks;
+    const TaskCategory = await sequelize.query(
+      "SELECT pkID, TaskCategory FROM SharvayaFranchise.dbo.MST_TaskCategory",
+      {
+        type: Sequelize.QueryTypes.SELECT
+      }
+    );
+    return { Employee, TaskCategory };
   } catch (err) {
     return err
   }
