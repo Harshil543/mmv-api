@@ -9,7 +9,13 @@ const getAllTask = async () => {
         type: Sequelize.QueryTypes.SELECT
       }
     );
-    return tasks;
+    const employee = await sequelize.query(
+      "SELECT ScreenFullName, EmployeeID FROM SharvayaFranchise.dbo.MST_Users",
+      {
+        type: Sequelize.QueryTypes.SELECT
+      }
+    );
+    return { tasks, employee };
   } catch (err) {
     return err
   }

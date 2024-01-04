@@ -2,7 +2,15 @@ const { getAllOption, getAllTask, createTask, deleteTask, editTask } = require("
 
 const getAlltaskService = async () => {
   const data = await getAllTask();
-  return data;
+  // console.log(data);
+  const tasksWithEmployeeNames = data.tasks.map(task => {
+    const employee = data.employee.find(emp => emp.EmployeeID === task.EmployeeID);
+    return {
+      ...task,
+      EmployeeName: employee ? employee.ScreenFullName : "Unknown Employee",
+    };
+  });
+  return tasksWithEmployeeNames;
 };
 const getAllOptionService = async () => {
   const data = await getAllOption();
