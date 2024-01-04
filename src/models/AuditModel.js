@@ -4,7 +4,7 @@ const { Sequelize } = require("sequelize");
 const getAllAuditActivity = async () => {
     try {
         const auditActivity = await sequelize.query(
-            "SELECT * FROM SharvayaFranchise.dbo.AuditActivity",
+            "SELECT * FROM SharvayaFranchise.dbo.AuditActivity ORDER BY pkID DESC",
             {
                 type: Sequelize.QueryTypes.SELECT
             }
@@ -15,20 +15,19 @@ const getAllAuditActivity = async () => {
                 type: Sequelize.QueryTypes.SELECT
             }
         );
-        console.log(customers);
         const employee = await sequelize.query(
             "SELECT ScreenFullName, EmployeeID FROM SharvayaFranchise.dbo.MST_Users",
             {
                 type: Sequelize.QueryTypes.SELECT
             }
         );
-        // const city = await sequelize.query(
-        //     "SELECT ScreenFullName, EmployeeID FROM SharvayaFranchise.dbo.MST_Users",
-        //     {
-        //         type: Sequelize.QueryTypes.SELECT
-        //     }
-        // );
-        return { auditActivity, customers, employee };
+        const city = await sequelize.query(
+            "SELECT CityCode, CityName FROM SharvayaFranchise.dbo.MST_City; ",
+            {
+                type: Sequelize.QueryTypes.SELECT
+            }
+        );
+        return { auditActivity, customers, employee, city };
     } catch (err) {
         return err
     }
