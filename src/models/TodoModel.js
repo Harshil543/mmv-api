@@ -4,7 +4,7 @@ const { Sequelize } = require("sequelize");
 const getAllTask = async () => {
   try {
     const tasks = await sequelize.query(
-      "SELECT * FROM SharvayaFranchise.dbo.TODO",
+      "SELECT * FROM SharvayaFranchise.dbo.TODO ORDER BY pkID DESC",
       {
         type: Sequelize.QueryTypes.SELECT
       }

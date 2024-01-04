@@ -1,13 +1,18 @@
 const express = require("express");
 const router = express.Router();
 const TasksController = require("../controllers/TodoController");
+const AuditController = require("../controllers/AuditController");
 
 router.get("/", (req, res) => {
     res.json("Hello API..!")
 });
 
 router.get("/tasks", TasksController.getAllTasksController);
+
 router.get("/options", TasksController.getAllOptionController);
+
+router.get("/audit-activity", AuditController.getAllAuditController);
+
 router.post("/create", async (req, res) => {
     await TasksController.CreateTasksController(req, res);
 });
