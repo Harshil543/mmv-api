@@ -75,9 +75,10 @@ const createTask = async (req, res) => {
       }
     );
     const insertedPkID = insertedRow[0].pkID;
+    console.log(insertedPkID);
     return insertedPkID
   } catch (err) {
-    return err
+    return { status: 400 }
   }
 }
 

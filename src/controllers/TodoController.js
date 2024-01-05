@@ -1,5 +1,5 @@
 const { getAllOptionService, getAlltaskService, createTaskService, deleteTaskService, editTaskService } = require("../services/TodoServices");
-const { response } = require("../utils/helper");
+const { response, badRequest } = require("../utils/helper");
 
 const getAllTasksController = async (req, res) => {
   try {
@@ -20,8 +20,13 @@ const getAllOptionController = async (req, res) => {
 };
 const CreateTasksController = async (req, res) => {
   try {
+
     const ID = await createTaskService(req, res);
-    res.json({ ...response, message: "Task Created successfully", data: ID });
+    if (ID.status === 400) {
+      res.json({ ...badRequest });
+    } else {
+      res.json({ ...response, message: "Task Created successfully", data: ID });
+    }
   } catch (error) {
     res.status(500).send("Internal Server Error");
   }
