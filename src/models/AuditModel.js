@@ -16,7 +16,7 @@ const getAllAuditActivity = async () => {
             }
         );
         const employee = await sequelize.query(
-            "SELECT ScreenFullName, EmployeeID FROM SharvayaFranchise.dbo.MST_Users",
+            "SELECT EmployeeID, EmployeeName FROM SharvayaFranchise.dbo.viewCompanyUsers;",
             {
                 type: Sequelize.QueryTypes.SELECT
             }

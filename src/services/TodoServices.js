@@ -6,7 +6,7 @@ const getAlltaskService = async () => {
     const employee = data.employee.find(emp => emp.EmployeeID === task.EmployeeID);
     return {
       ...task,
-      EmployeeName: employee ? employee.ScreenFullName : "Unknown Employee",
+      EmployeeName: employee ? employee.EmployeeName : "Unknown Employee",
     };
   });
   return tasksWithEmployeeNames;

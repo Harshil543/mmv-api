@@ -11,7 +11,7 @@ const getAllAuditActivityService = async () => {
             CustomerName: customers ? customers.CustomerName : null,
             ContactNo1: customers ? customers.ContactNo1 : null,
             Area: customers ? customers.Area : null,
-            EmployeeName: employee ? employee.ScreenFullName : null,
+            EmployeeName: employee ? employee.EmployeeName : null,
             city: city ? city.CityName : null
         };
     });
