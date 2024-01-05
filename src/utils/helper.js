@@ -2,13 +2,13 @@
 
 const response = {
   status: "success",
-  status: 200,
+  code: 200,
   message: "successfully."
 };
 
 const badRequest = {
   status: "success",
-  status: 400,
+  code: 400,
   message: "Bad Request - Invalid JSON."
 };
 
