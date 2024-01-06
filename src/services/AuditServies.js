@@ -4,7 +4,7 @@ const getAllAuditActivityService = async () => {
     const data = await getAllAuditActivity();
     const auditWithCustomer = data.auditActivity.map(audit => {
         const customers = data.customers.find(cst => cst.CustomerID === audit.CustomerID);
-        const employee = data.employee.find(emp => emp.EmployeeID === audit.EmployeeID);
+        const employee = data.employee.find(emp => emp.pkID === audit.EmployeeID);
         const city = data.city.find(cty => cty.CityCode === customers.CityCode);
         return {
             ...audit,
