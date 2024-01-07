@@ -27,7 +27,19 @@ const getAllAuditActivity = async () => {
                 type: Sequelize.QueryTypes.SELECT
             }
         );
-        return { auditActivity, customers, employee, city };
+        const section = await sequelize.query(
+            "SELECT pkID, InquiryStatus, StatusCategory, CampaignID, DisplayOrder FROM SharvayaFranchise.dbo.MST_InquiryStatus WHERE StatusCategory='CheckList'",
+            {
+                type: Sequelize.QueryTypes.SELECT
+            }
+        );
+        const sectionWithRating = await sequelize.query(
+            "SELECT pkID, CheckHead, CheckDesc, CreatedBy, CreatedDate, UpdatedBy, UpdatedDate, ItemOrder, Description, HeadID, BaseRating FROM SharvayaFranchise.dbo.MST_CheckList",
+            {
+                type: Sequelize.QueryTypes.SELECT
+            }
+        );
+        return { auditActivity, customers, employee, city, section, sectionWithRating };
     } catch (err) {
         return err
     }

@@ -15,7 +15,15 @@ const getAllAuditActivityService = async () => {
             city: city ? city.CityName : null
         };
     });
-    return auditWithCustomer;
+    const sectionWithBase = data.section.map((sec) => {
+        const rate = data.sectionWithRating.find(rat => rat.ItemOrder === sec.DisplayOrder);
+        return {
+            ...sec,
+            BaseRating: rate ? rate.BaseRating : null,
+            Description: rate ? rate.Description : null
+        };
+    })
+    return { auditWithCustomer, section: sectionWithBase };
 };
 
 module.exports = { getAllAuditActivityService }
