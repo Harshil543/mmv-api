@@ -9,7 +9,7 @@ const response = {
 const badRequest = {
   status: "success",
   code: 400,
-  message: "Bad Request - Invalid JSON."
+  message: "something went wrong."
 };
 
 module.exports = {

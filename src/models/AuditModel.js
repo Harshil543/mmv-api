@@ -41,8 +41,34 @@ const getAllAuditActivity = async () => {
         );
         return { auditActivity, customers, employee, city, section, sectionWithRating };
     } catch (err) {
-        return err
+        return { status: 400 }
     }
 };
 
-module.exports = { getAllAuditActivity }
+
+const editSectionRating = async (req, res) => {
+    try {
+        const {
+            ParentId,
+            CheckList
+        } = req.body;
+
+        CheckList.map(async (check) => {
+            await sequelize.query(
+                `UPDATE SharvayaFranchise.dbo.AuditActivity_Detail
+                SET AuditStatus = ${check.AuditStatus}, ScoreRating = ${check.ScoreRating}, Remarks = '${check.Remark}'
+                WHERE ParentId = ${ParentId} AND CheckListID = ${check.CheckListID};
+                `,
+                {
+                    type: Sequelize.QueryTypes.UPDATE
+                }
+            )
+        })
+
+        return { status: "SUCCESS", message: "Audit updated Successfully." };
+    } catch (err) {
+        return { status: 400 }
+    }
+};
+
+module.exports = { getAllAuditActivity, editSectionRating }

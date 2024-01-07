@@ -4,7 +4,11 @@ const { response, badRequest } = require("../utils/helper");
 const getAllTasksController = async (req, res) => {
   try {
     const TaskList = await getAlltaskService();
-    res.json({ ...response, data: TaskList });
+    if (TaskList.status === 400) {
+      res.json({ ...badRequest });
+    } else {
+      res.json({ ...response, data: TaskList });
+    }
   } catch (error) {
     res.status(500).send("Internal Server Error");
   }
@@ -13,7 +17,11 @@ const getAllTasksController = async (req, res) => {
 const getAllOptionController = async (req, res) => {
   try {
     const TaskList = await getAllOptionService();
-    res.json({ ...response, data: TaskList });
+    if (TaskList.status === 400) {
+      res.json({ ...badRequest });
+    } else {
+      res.json({ ...response, data: TaskList });
+    }
   } catch (error) {
     res.status(500).send("Internal Server Error");
   }
@@ -35,7 +43,11 @@ const CreateTasksController = async (req, res) => {
 const deleteTaskController = async (req, res) => {
   try {
     const ID = await deleteTaskService(req, res);
-    res.json({ ...response, message: "Task Deleted successfully" });
+    if (ID.status === 400) {
+      res.json({ ...badRequest });
+    } else {
+      res.json({ ...response, message: "Task Deleted successfully" });
+    }
   } catch (error) {
     res.status(500).send("Internal Server Error");
   }
@@ -44,7 +56,11 @@ const deleteTaskController = async (req, res) => {
 const editTaskController = async (req, res) => {
   try {
     const ID = await editTaskService(req, res);
-    res.json({ ...response, message: "Task updated successfully" });
+    if (ID.status === 400) {
+      res.json({ ...badRequest });
+    } else {
+      res.json({ ...response, message: "Task updated successfully" });
+    }
   } catch (error) {
     res.status(500).send("Internal Server Error");
   }

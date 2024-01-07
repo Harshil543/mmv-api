@@ -17,7 +17,7 @@ const getAllTask = async () => {
     );
     return { tasks, employee };
   } catch (err) {
-    return err
+    return { status: 400 }
   }
 };
 
@@ -37,7 +37,7 @@ const getAllOption = async () => {
     );
     return { Employee, TaskCategory };
   } catch (err) {
-    return err
+    return { status: 400 }
   }
 };
 
@@ -114,7 +114,7 @@ const deleteTask = async (req, res) => {
     );
     return { status: "SUCCESS", message: "Task Deleted Successfully." };
   } catch (err) {
-    return err
+    return { status: 400 }
   }
 };
 
@@ -152,7 +152,7 @@ const editTask = async (req, res) => {
     );
     return { status: "SUCCESS", message: "Task updated Successfully." };
   } catch (err) {
-    return err
+    return { status: 400 }
   }
 };
 

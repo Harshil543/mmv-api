@@ -12,6 +12,7 @@ router.get("/tasks", TasksController.getAllTasksController);
 router.get("/options", TasksController.getAllOptionController);
 
 router.get("/audit-activity", AuditController.getAllAuditController);
+router.post("/edit-audit-activity", async (req, res) => { await AuditController.editSectionRatingController(req, res) });
 
 router.post("/create", async (req, res) => {
     await TasksController.CreateTasksController(req, res);

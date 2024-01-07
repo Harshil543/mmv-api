@@ -1,4 +1,4 @@
-const { getAllAuditActivity } = require("../models/AuditModel");
+const { getAllAuditActivity, editSectionRating } = require("../models/AuditModel");
 
 const getAllAuditActivityService = async () => {
     const data = await getAllAuditActivity();
@@ -26,4 +26,9 @@ const getAllAuditActivityService = async () => {
     return { auditWithCustomer, section: sectionWithBase };
 };
 
-module.exports = { getAllAuditActivityService }
+const editSectionRatingService = async (req, res) => {
+    const data = await editSectionRating(req, res);
+    return data;
+};
+
+module.exports = { getAllAuditActivityService, editSectionRatingService }
