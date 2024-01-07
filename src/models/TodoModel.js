@@ -15,7 +15,13 @@ const getAllTask = async () => {
         type: Sequelize.QueryTypes.SELECT
       }
     );
-    return { tasks, employee };
+    const TaskSharingEmployee = await sequelize.query(
+      "SELECT Module, ParentID, EmployeeID FROM SharvayaFranchise.dbo.ModuleSharing;",
+      {
+        type: Sequelize.QueryTypes.SELECT
+      }
+    );
+    return { tasks, employee, TaskSharingEmployee };
   } catch (err) {
     return { status: 400 }
   }
@@ -82,7 +88,7 @@ const createTask = async (req, res) => {
         await sequelize.query(
           `INSERT INTO SharvayaFranchise.dbo.ModuleSharing
           (Module, ParentID, EmployeeID, CreatedBy, CreatedDate, UpdatedBy, UpdatedDate, CompletionDate)
-          VALUES('todo', ${insertedPkID}, ${M_emp}, '${CreatedBy}', '${CreatedDate}', '', '', '');`,
+          VALUES('todo', ${insertedPkID}, ${M_emp}, '${CreatedBy}', '${CreatedDate}', '${UpdatedBy}', '${UpdatedDate}', '${CompletionDate}');`,
           {
             type: Sequelize.QueryTypes.INSERT
           }
