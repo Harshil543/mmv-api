@@ -62,7 +62,9 @@ const createTask = async (req, res) => {
       ClosingRemarks,
       CustomerID,
       ActualDeliveryDate,
-      CreatedDate, UpdatedDate,
+      CreatedDate,
+      UpdatedDate,
+      MultiAssignEmp
     } = req.body;
 
     const [insertedRow, _] = await sequelize.query(
@@ -75,7 +77,18 @@ const createTask = async (req, res) => {
       }
     );
     const insertedPkID = insertedRow[0].pkID;
-    console.log(insertedPkID);
+    if (insertedPkID && MultiAssignEmp) {
+      MultiAssignEmp?.map(async (M_emp) => {
+        await sequelize.query(
+          `INSERT INTO SharvayaFranchise.dbo.ModuleSharing
+          (Module, ParentID, EmployeeID, CreatedBy, CreatedDate, UpdatedBy, UpdatedDate, CompletionDate)
+          VALUES('todo', ${insertedPkID}, ${M_emp}, '${CreatedBy}', '${CreatedDate}', '', '', '');`,
+          {
+            type: Sequelize.QueryTypes.INSERT
+          }
+        );
+      })
+    }
     return insertedPkID
   } catch (err) {
     return { status: 400 }
@@ -88,6 +101,13 @@ const deleteTask = async (req, res) => {
     await sequelize.query(
       `DELETE FROM SharvayaFranchise.dbo.TODO
       WHERE pkID=${ID}`,
+      {
+        type: Sequelize.QueryTypes.DELETE
+      }
+    );
+    await sequelize.query(
+      `DELETE FROM SharvayaFranchise.dbo.ModuleSharing
+      WHERE ParentID=${ID};`,
       {
         type: Sequelize.QueryTypes.DELETE
       }
