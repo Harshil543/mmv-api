@@ -1,4 +1,4 @@
-const { getAllAuditActivity, editSectionRating } = require("../models/AuditModel");
+const { getAllAuditActivity, editSectionRating, getSectionBaseRate } = require("../models/AuditModel");
 
 const getAllAuditActivityService = async () => {
     const data = await getAllAuditActivity();
@@ -17,6 +17,12 @@ const getAllAuditActivityService = async () => {
             score: score ? score : []
         };
     });
+
+    return { auditWithCustomer };
+};
+
+const SectionRatingService = async (req, res) => {
+    const data = await getSectionBaseRate(req, res);
     const sectionWithBase = data.section.map((sec) => {
         const rate = data.sectionWithBaseRating.find(rat => rat.ItemOrder === sec.DisplayOrder);
         return {
@@ -26,7 +32,7 @@ const getAllAuditActivityService = async () => {
             checkListID: rate.pkID
         };
     })
-    return { auditWithCustomer, section: sectionWithBase };
+    return sectionWithBase;
 };
 
 const editSectionRatingService = async (req, res) => {
@@ -34,4 +40,4 @@ const editSectionRatingService = async (req, res) => {
     return data;
 };
 
-module.exports = { getAllAuditActivityService, editSectionRatingService }
+module.exports = { getAllAuditActivityService, editSectionRatingService, SectionRatingService }

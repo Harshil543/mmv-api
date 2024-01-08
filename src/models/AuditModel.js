@@ -27,6 +27,22 @@ const getAllAuditActivity = async () => {
                 type: Sequelize.QueryTypes.SELECT
             }
         );
+
+        const sectionWithScoreRating = await sequelize.query(
+            "SELECT pkID, ParentID, CheckListID, AuditStatus, BaseRating, ScoreRating, Remarks FROM SharvayaFranchise.dbo.AuditActivity_Detail",
+            {
+                type: Sequelize.QueryTypes.SELECT
+            }
+        );
+        return { auditActivity, customers, employee, city, sectionWithScoreRating };
+    } catch (err) {
+        return { status: 400 }
+    }
+};
+
+const getSectionBaseRate = async () => {
+    try {
+
         const section = await sequelize.query(
             "SELECT pkID, InquiryStatus, StatusCategory, CampaignID, DisplayOrder FROM SharvayaFranchise.dbo.MST_InquiryStatus WHERE StatusCategory='CheckList'",
             {
@@ -39,18 +55,12 @@ const getAllAuditActivity = async () => {
                 type: Sequelize.QueryTypes.SELECT
             }
         );
-        const sectionWithScoreRating = await sequelize.query(
-            "SELECT pkID, ParentID, CheckListID, AuditStatus, BaseRating, ScoreRating, Remarks FROM SharvayaFranchise.dbo.AuditActivity_Detail",
-            {
-                type: Sequelize.QueryTypes.SELECT
-            }
-        );
-        return { auditActivity, customers, employee, city, section, sectionWithBaseRating, sectionWithScoreRating };
+        return { section, sectionWithBaseRating };
     } catch (err) {
         return { status: 400 }
     }
-};
 
+}
 
 const editSectionRating = async (req, res) => {
     try {
@@ -77,4 +87,4 @@ const editSectionRating = async (req, res) => {
     }
 };
 
-module.exports = { getAllAuditActivity, editSectionRating }
+module.exports = { getAllAuditActivity, editSectionRating, getSectionBaseRate }
