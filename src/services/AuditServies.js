@@ -22,7 +22,8 @@ const getAllAuditActivityService = async () => {
         return {
             ...sec,
             BaseRating: rate ? rate.BaseRating : null,
-            Description: rate ? rate.Description : null
+            Description: rate ? rate.Description : null,
+            checkListID: rate.pkID
         };
     })
     return { auditWithCustomer, section: sectionWithBase };

@@ -45,7 +45,6 @@ const getAllAuditActivity = async () => {
                 type: Sequelize.QueryTypes.SELECT
             }
         );
-        console.log(sectionWithScoreRating);
         return { auditActivity, customers, employee, city, section, sectionWithBaseRating, sectionWithScoreRating };
     } catch (err) {
         return { status: 400 }
