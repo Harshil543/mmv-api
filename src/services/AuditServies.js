@@ -6,7 +6,8 @@ const getAllAuditActivityService = async () => {
         const customers = data.customers.find(cst => cst.CustomerID === audit.CustomerID);
         const employee = data.employee.find(emp => emp.pkID === audit.EmployeeID);
         const city = data.city.find(cty => cty.CityCode === customers.CityCode);
-        const score = data.sectionWithScoreRating.map(ss => { return ss.ParentID === audit.pkID && ss })
+        let scored = []
+        const score = data.sectionWithScoreRating.map(ss => { return ss.ParentID === audit.pkID ? scored.push(ss) : "" })
         return {
             ...audit,
             CustomerName: customers ? customers.CustomerName : null,
@@ -14,7 +15,7 @@ const getAllAuditActivityService = async () => {
             Area: customers ? customers.Area : null,
             EmployeeName: employee ? employee.EmployeeName : null,
             city: city ? city.CityName : null,
-            score: score ? score : []
+            score: score ? scored : []
         };
     });
 
