@@ -33,13 +33,20 @@ const getAllAuditActivity = async () => {
                 type: Sequelize.QueryTypes.SELECT
             }
         );
-        const sectionWithRating = await sequelize.query(
+        const sectionWithBaseRating = await sequelize.query(
             "SELECT pkID, CheckHead, CheckDesc, CreatedBy, CreatedDate, UpdatedBy, UpdatedDate, ItemOrder, Description, HeadID, BaseRating FROM SharvayaFranchise.dbo.MST_CheckList",
             {
                 type: Sequelize.QueryTypes.SELECT
             }
         );
-        return { auditActivity, customers, employee, city, section, sectionWithRating };
+        const sectionWithScoreRating = await sequelize.query(
+            "SELECT pkID, ParentID, CheckListID, AuditStatus, BaseRating, ScoreRating, Remarks FROM SharvayaFranchise.dbo.AuditActivity_Detail",
+            {
+                type: Sequelize.QueryTypes.SELECT
+            }
+        );
+        console.log(sectionWithScoreRating);
+        return { auditActivity, customers, employee, city, section, sectionWithBaseRating, sectionWithScoreRating };
     } catch (err) {
         return { status: 400 }
     }
