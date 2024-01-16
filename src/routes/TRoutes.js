@@ -2,6 +2,18 @@ const express = require("express");
 const router = express.Router();
 const TasksController = require("../controllers/TodoController");
 const AuditController = require("../controllers/AuditController");
+const path = require('path');
+const fs = require('fs/promises');
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+    destination: "E:/MMV/moduledocs",
+    filename: (req, file, cb) => {
+        cb(null, `auditactivity-${file.originalname}`);
+    },
+});
+
+const upload = multer({ storage: storage });
 
 router.get("/", (req, res) => {
     res.json("Hello API..!")
@@ -25,6 +37,22 @@ router.post("/delete", async (req, res) => {
 
 router.post("/edit", async (req, res) => {
     await TasksController.editTaskController(req, res);
+});
+
+router.post("/upload", upload.single('file'), async (req, res) => {
+    try {
+        if (req.file) {
+            await AuditController.FileController(req, res);
+            const sourcePath = req.file.path;
+            const destinationPath = path.join("E:/MMV/moduledocs", req.file.filename);
+            await fs.rename(sourcePath, destinationPath);
+            const filePath = `moduledocs/${req.file.filename}`;
+        } else {
+            return res.status(400).json({ message: 'No file uploaded' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Internal server error' });
+    }
 });
 
 router.use((req, res) => {

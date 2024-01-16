@@ -87,4 +87,20 @@ const editSectionRating = async (req, res) => {
     }
 };
 
-module.exports = { getAllAuditActivity, editSectionRating, getSectionBaseRate }
+const FileUpload = async (req, res) => {
+    try {
+        const insertedRow = await sequelize.query(
+            `INSERT INTO SharvayaFranchise.dbo.MST_Module_Documents (ModuleName, KeyValue, DocName, DocType, DocData, CreatedBy, CreatedDate) 
+            VALUES('auditactivity',  '${req.body.KeyValue}', '${req.file.filename}', '', ${null}, 'admin', '${req.body.CreatedDate}')`,
+            {
+                type: Sequelize.QueryTypes.INSERT
+            }
+        );
+        return insertedRow;
+    } catch (err) {
+        return { status: 400 }
+    }
+
+}
+
+module.exports = { getAllAuditActivity, editSectionRating, getSectionBaseRate, FileUpload }

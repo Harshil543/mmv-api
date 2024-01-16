@@ -1,4 +1,4 @@
-const { getAllAuditActivityService, editSectionRatingService, SectionRatingService } = require("../services/AuditServies");
+const { getAllAuditActivityService, editSectionRatingService, SectionRatingService, FileService } = require("../services/AuditServies");
 const { response, badRequest } = require("../utils/helper");
 
 const getAllAuditController = async (req, res) => {
@@ -40,4 +40,21 @@ const editSectionRatingController = async (req, res) => {
     }
 };
 
-module.exports = { getAllAuditController, editSectionRatingController, getAllAuditServiceController }
+const FileController = async (req, res) => {
+    try {
+        const AuditList = await FileService(req, res);
+        console.log(AuditList);
+        if (AuditList.status === 400) {
+            res.json({ ...badRequest });
+        } else {
+            res.status(200).json({
+                message: 'File uploaded successfully'
+            });
+        }
+    } catch (error) {
+        console.log(error);;
+    }
+};
+
+
+module.exports = { getAllAuditController, editSectionRatingController, getAllAuditServiceController, FileController }
