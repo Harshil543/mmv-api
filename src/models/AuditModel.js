@@ -28,13 +28,22 @@ const getAllAuditActivity = async () => {
             }
         );
 
+        const DocData = await sequelize.query(
+            `SELECT pkID, ModuleName, KeyValue, DocName
+            FROM SharvayaFranchise.dbo.MST_Module_Documents`,
+            {
+                type: Sequelize.QueryTypes.SELECT
+            }
+        );
+
         const sectionWithScoreRating = await sequelize.query(
             "SELECT pkID, ParentID, CheckListID, AuditStatus, BaseRating, ScoreRating, Remarks FROM SharvayaFranchise.dbo.AuditActivity_Detail",
             {
                 type: Sequelize.QueryTypes.SELECT
             }
         );
-        return { auditActivity, customers, employee, city, sectionWithScoreRating };
+        console.log(DocData);
+        return { auditActivity, customers, employee, city, sectionWithScoreRating, DocData };
     } catch (err) {
         return { status: 400 }
     }
@@ -96,6 +105,7 @@ const FileUpload = async (req, res) => {
                 type: Sequelize.QueryTypes.INSERT
             }
         );
+
         return insertedRow;
     } catch (err) {
         return { status: 400 }
@@ -103,4 +113,22 @@ const FileUpload = async (req, res) => {
 
 }
 
-module.exports = { getAllAuditActivity, editSectionRating, getSectionBaseRate, FileUpload }
+const FileDelete = async (req, res) => {
+    try {
+        const { ID } = req.body
+        console.log(ID, "ID");
+        const deleted = await sequelize.query(
+            `DELETE FROM SharvayaFranchise.dbo.MST_Module_Documents WHERE pkID=${ID}`,
+            {
+                type: Sequelize.QueryTypes.DELETE
+            }
+        );
+        return deleted;
+    } catch (err) {
+        return { status: 400 }
+    }
+
+}
+
+
+module.exports = { getAllAuditActivity, editSectionRating, getSectionBaseRate, FileUpload, FileDelete }

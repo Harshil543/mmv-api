@@ -1,9 +1,12 @@
-const { getAllAuditActivity, editSectionRating, getSectionBaseRate, FileUpload } = require("../models/AuditModel");
+const { getAllAuditActivity, editSectionRating, getSectionBaseRate, FileUpload, FileDelete } = require("../models/AuditModel");
 
 const getAllAuditActivityService = async () => {
     const data = await getAllAuditActivity();
     const auditWithCustomer = data.auditActivity.map(audit => {
         const customers = data.customers.find(cst => cst.CustomerID === audit.CustomerID);
+        let files = []
+        const DocData = data.DocData.map(dd => dd.KeyValue === audit.pkID ? files.push(dd) : "");
+        console.log(DocData);
         const employee = data.employee.find(emp => emp.pkID === audit.EmployeeID);
         const city = data.city.find(cty => cty.CityCode === customers.CityCode);
         let scored = []
@@ -15,7 +18,8 @@ const getAllAuditActivityService = async () => {
             Area: customers ? customers.Area : null,
             EmployeeName: employee ? employee.EmployeeName : null,
             city: city ? city.CityName : null,
-            score: score ? scored : []
+            score: score ? scored : [],
+            FileList: DocData ? files : []
         };
     });
 
@@ -47,5 +51,8 @@ const FileService = async (req, res) => {
     return data;
 };
 
-
-module.exports = { getAllAuditActivityService, editSectionRatingService, SectionRatingService, FileService }
+const FileDeleteService = async (req, res) => {
+    const data = await FileDelete(req, res);
+    return data;
+}
+module.exports = { getAllAuditActivityService, editSectionRatingService, SectionRatingService, FileService, FileDeleteService }

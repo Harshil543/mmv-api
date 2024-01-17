@@ -55,6 +55,22 @@ router.post("/upload", upload.single('file'), async (req, res) => {
     }
 });
 
+router.delete('/deleteFile/:filename', async (req, res) => {
+    const filename = req.params.filename;
+    const filePath = `E:/MMV/moduledocs/${filename}`;
+    try {
+        await AuditController.FileDeleteController(req, res);
+        await fs.access(filePath, fs.constants.F_OK);
+        await fs.unlink(filePath);
+    } catch (error) {
+        if (error.code === 'ENOENT') {
+            res.status(404).send(`File "${filename}" not found.`);
+        } else {
+            res.status(500).send(`Error deleting file "${filename}": ${error.message}`);
+        }
+    }
+});
+
 router.use((req, res) => {
     res.status(404).json("Page Not Found");
 });
